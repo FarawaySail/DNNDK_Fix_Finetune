@@ -1,0 +1,374 @@
+layer {
+  name: "imR1"
+  type: "ImageData"
+  top: "imR1"
+  top: "nil_R1"
+  include {
+    phase: TEST
+  }
+  transform_param {
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
+  }
+  image_data_param {
+    source: "/home/xuyf/test_decent/data/test_one_1.txt"
+    batch_size: 1
+    new_height: 160
+    new_width: 608
+  }
+}
+layer {
+  name: "imR2"
+  type: "ImageData"
+  top: "imR2"
+  top: "nil_R2"
+  include {
+    phase: TEST
+  }
+  transform_param {
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
+  }
+  image_data_param {
+    source: "/home/xuyf/test_decent/data/test_one_2.txt"
+    batch_size: 1
+    new_height: 160
+    new_width: 608
+  }
+}
+layer {
+  name: "imR"
+  type: "Concat"
+  bottom: "imR2"
+  bottom: "imR1"
+  top: "data"
+  include {
+    phase: TEST
+  }
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "data_fixed"
+  type: "FixedNeuron"
+  bottom: "data"
+  top: "data"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  fixed_param {
+    fixed_method: OVER_FLOW
+    bit_width: 8
+    follow_data_layer: true
+  }
+}
+layer {
+  name: "conv_0_pose"
+  type: "ConvolutionFixed"
+  bottom: "data"
+  top: "conv_0_pose"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 16
+    pad: 3
+    kernel_size: 7
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "relu_0_pose"
+  type: "ReLU"
+  bottom: "conv_0_pose"
+  top: "conv_0_pose"
+}
+layer {
+  name: "conv_0_pose_fixed"
+  type: "FixedNeuron"
+  bottom: "conv_0_pose"
+  top: "conv_0_pose"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "conv_1_pose"
+  type: "ConvolutionFixed"
+  bottom: "conv_0_pose"
+  top: "conv_1_pose"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 32
+    pad: 2
+    kernel_size: 5
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "relu_1_pose"
+  type: "ReLU"
+  bottom: "conv_1_pose"
+  top: "conv_1_pose"
+}
+layer {
+  name: "conv_1_pose_fixed"
+  type: "FixedNeuron"
+  bottom: "conv_1_pose"
+  top: "conv_1_pose"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "conv_2_pose"
+  type: "ConvolutionFixed"
+  bottom: "conv_1_pose"
+  top: "conv_2_pose"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "relu_2_pose"
+  type: "ReLU"
+  bottom: "conv_2_pose"
+  top: "conv_2_pose"
+}
+layer {
+  name: "conv_2_pose_fixed"
+  type: "FixedNeuron"
+  bottom: "conv_2_pose"
+  top: "conv_2_pose"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "conv_3_pose"
+  type: "ConvolutionFixed"
+  bottom: "conv_2_pose"
+  top: "conv_3_pose"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "relu_3_pose"
+  type: "ReLU"
+  bottom: "conv_3_pose"
+  top: "conv_3_pose"
+}
+layer {
+  name: "conv_3_pose_fixed"
+  type: "FixedNeuron"
+  bottom: "conv_3_pose"
+  top: "conv_3_pose"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "conv_4_pose"
+  type: "ConvolutionFixed"
+  bottom: "conv_3_pose"
+  top: "conv_4_pose"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "relu_4_pose"
+  type: "ReLU"
+  bottom: "conv_4_pose"
+  top: "conv_4_pose"
+}
+layer {
+  name: "conv_4_pose_fixed"
+  type: "FixedNeuron"
+  bottom: "conv_4_pose"
+  top: "conv_4_pose"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "conv_5_pose"
+  type: "ConvolutionFixed"
+  bottom: "conv_4_pose"
+  top: "conv_5_pose"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
+layer {
+  name: "relu_5_pose"
+  type: "ReLU"
+  bottom: "conv_5_pose"
+  top: "conv_5_pose"
+}
+layer {
+  name: "conv_5_pose_fixed"
+  type: "FixedNeuron"
+  bottom: "conv_5_pose"
+  top: "conv_5_pose"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  fixed_param {
+    fixed_method: DIFF_S
+    bit_width: 8
+  }
+}
