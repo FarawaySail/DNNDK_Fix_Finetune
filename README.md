@@ -125,4 +125,4 @@ for cnt,seq in enumerate(self.eval_seqs):
         net.forward()
         pred_poses[seq].append(net.blobs['SE3'].data[0,0].copy())
 ```
-However, we can notice that, `decent quantize` and `decent test` can only take effect to ConvolutionFixed layers. And the fc layers and python layers can't be processed. So we need to add fc and python layers to a new prototxt and caffemodel.
+However, we can notice that, `decent quantize` and `decent test` can only take effect to ConvolutionFixed layers. And the fc layers and python layers can't be processed. So we need to add fc and python layers to a new prototxt and caffemodel，which is `test_sqModel.prototxt`.
