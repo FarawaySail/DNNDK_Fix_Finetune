@@ -1,4 +1,4 @@
-# DNNDK_Fix_Finetune
+﻿# DNNDK_Fix_Finetune
 ## Install DeePhi's DNNDK
 1. Downloading DNNDK  
    DeePhi's DNNDK package could be freely downloaded after submitting registration information at DeePhi website http://www.deephi.com/technology/dnndk. The latest version v2.07 beta is publicly released in Oct. 2018.
@@ -43,7 +43,7 @@ caffemodel | float | float | float | float
 model name | float_model_2 | fix_train_test_2 | deploy_2  
 -|-|-|-
 prototxt | Convolution | ConvolutionFixed | Convolution 
-caffemodel | fixed | fixed | fixed 
+caffemodel | float (fixed) | float (fixed) | float (fixed） 
 
 Our work is based on that we have `fixed_model` now. 
 
